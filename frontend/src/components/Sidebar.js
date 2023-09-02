@@ -7,8 +7,6 @@ function Sidebar() {
 
     return (
         <div className="bg-gray-800 overflow-y-auto w-64 h-screen text-white p-6">
-            <h2 className="text-2xl mb-6 font-semibold">Navigation</h2>
-
             <nav className="space-y-4">
                 <Link className="block py-2 px-4 hover:bg-gray-700 transition duration-200" to="/">Dashboard</Link>
                 <Link className="block py-2 px-4 hover:bg-gray-700 transition duration-200" to="/my-profile">My Profile</Link>

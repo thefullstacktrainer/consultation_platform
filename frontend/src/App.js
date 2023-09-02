@@ -17,34 +17,38 @@ import Analytics from './components/Analytics';
 import Sidebar from './components/Sidebar';
 import ContentLibrary from './components/ContentLibrary';
 import Consultations from './components/Consultations';
+import Navbar from './components/Navbar';
 
 function App() {
   return (
     <Router>
-      <div className="app">
-        <Sidebar />
-        <div className="main-content">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/my-profile" element={<MyProfile />} />
-            <Route path="/my-content" element={<MyContent />} />
-            <Route path="/my-consultations" element={<MyConsultations />} />
-            <Route path="/messages" element={<Messages />} />
-            <Route path="/notifications" element={<Notifications />} />
-            <Route path="/payment-subscriptions" element={<PaymentSubscriptions />} />
-            <Route path="/settings" element={<Settings />} />
+      <div className="flex flex-col h-screen">
+        <Navbar />
+        <div className="flex flex-1">
+          <Sidebar />
+          <div className="main-content flex-1 overflow-y-auto">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/my-profile" element={<MyProfile />} />
+              <Route path="/my-content" element={<MyContent />} />
+              <Route path="/my-consultations" element={<MyConsultations />} />
+              <Route path="/messages" element={<Messages />} />
+              <Route path="/notifications" element={<Notifications />} />
+              <Route path="/payment-subscriptions" element={<PaymentSubscriptions />} />
+              <Route path="/settings" element={<Settings />} />
 
-            {/* Additional Routes for consultants/content creators */}
-            <Route path="/consultation-slots" element={<ConsultationSlots />} />
-            <Route path="/reviews-ratings" element={<ReviewsRatings />} />
-            <Route path="/earnings" element={<Earnings />} />
-            <Route path="/analytics" element={<Analytics />} />
+              {/* Additional Routes for consultants/content creators */}
+              <Route path="/consultation-slots" element={<ConsultationSlots />} />
+              <Route path="/reviews-ratings" element={<ReviewsRatings />} />
+              <Route path="/earnings" element={<Earnings />} />
+              <Route path="/analytics" element={<Analytics />} />
 
-            {/* Routes you've provided before */}
-            <Route path="/content-library" element={<ContentLibrary />} />
-            <Route path="/consultations" element={<Consultations />} />
-            {/* ... add other routes as needed */}
-          </Routes>
+              {/* Routes you've provided before */}
+              <Route path="/content-library" element={<ContentLibrary />} />
+              <Route path="/consultations" element={<Consultations />} />
+              {/* ... add other routes as needed */}
+            </Routes>
+          </div>
         </div>
       </div>
     </Router>

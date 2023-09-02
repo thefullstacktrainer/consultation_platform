@@ -1,0 +1,13 @@
+.app {
+    display: flex;
+}
+
+.sidebar {
+    flex: 1;
+    /* Add styling for your sidebar */
+}
+
+.main-content {
+    flex: 3;
+    /* Add styling for your main content area */
+}

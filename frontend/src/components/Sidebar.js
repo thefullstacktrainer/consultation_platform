@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 
 function Sidebar() {
     // This is just a placeholder. In a real app, you'd determine this based on user roles, etc.
-    const isConsultantOrContentCreator = false;
+    const isConsultantOrContentCreator = true;
 
     return (
-        <div className="bg-gray-800 w-64 h-screen text-white p-6">
+        <div className="bg-gray-800 overflow-y-auto w-64 h-screen text-white p-6">
             <h2 className="text-2xl mb-6 font-semibold">Navigation</h2>
 
             <nav className="space-y-4">

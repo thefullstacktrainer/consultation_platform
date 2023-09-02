@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 function Sidebar() {
     // This is just a placeholder. In a real app, you'd determine this based on user roles, etc.
-    const isConsultantOrContentCreator = true;
+    const isConsultantOrContentCreator = false;
 
     return (
         <div className="bg-gray-800 w-64 h-screen text-white p-6">

@@ -23,10 +23,11 @@ function App() {
   return (
     <Router>
       <div className="flex flex-col h-screen">
-        <Navbar />
-        <div className="flex flex-1">
+
+        <div className="flex flex-1 bg-white">
           <Sidebar />
-          <div className="main-content flex-1 overflow-y-auto">
+          <div className="flex-1 flex flex-col overflow-hidden">
+            <Navbar />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/my-profile" element={<MyProfile />} />

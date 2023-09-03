@@ -12,7 +12,7 @@ const Navbar = () => {
                 <div className="flex items-center justify-between">
                     <div className="text-2xl font-semibold text-gray-900">BrandName</div>
                     <div className="hidden md:flex space-x-4">
-                        <Link to="/" className="text-gray-700 hover:text-gray-900">Home</Link>
+                        <Link to="/" className="text-gray-700 hover:text-gray-900">Dashboard</Link>
                         <Link to="/content-library" className="text-gray-700 hover:text-gray-900">Content Library</Link>
                         <Link to="/consultations" className="text-gray-700 hover:text-gray-900">Consultations</Link>
                         {/* ... add other routes as necessary ... */}
@@ -28,7 +28,7 @@ const Navbar = () => {
                 </div>
                 {isOpen && (
                     <div className="md:hidden space-y-2 mt-2">
-                        <Link to="/" className="block text-gray-700 hover:text-gray-900">Home</Link>
+                        <Link to="/" className="block text-gray-700 hover:text-gray-900">Dashboard</Link>
                         <Link to="/content-library" className="block text-gray-700 hover:text-gray-900">Content Library</Link>
                         <Link to="/consultations" className="block text-gray-700 hover:text-gray-900">Consultations</Link>
                         {/* ... add other routes for mobile view as necessary ... */}

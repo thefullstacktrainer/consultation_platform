@@ -18,6 +18,7 @@ import ContentLibrary from './components/ContentLibrary';
 import Consultations from './components/Consultations';
 import Navbar from './components/Navbar';
 import Dashboard from './components/Dashboard';
+import Home from './components/Home';
 
 function App() {
   return (
@@ -30,7 +31,8 @@ function App() {
             <Navbar />
             <div className="flex-grow overflow-y-auto">
               <Routes>
-                <Route path="/" element={<Dashboard />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/my-profile" element={<MyProfile />} />
                 <Route path="/my-content" element={<MyContent />} />
                 <Route path="/my-consultations" element={<MyConsultations />} />

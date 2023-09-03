@@ -10,9 +10,10 @@ const Navbar = () => {
         <div className="bg-white text-gray-800 shadow-md w-full sticky top-0 z-10">
             <div className="container mx-auto px-4 py-2">
                 <div className="flex items-center justify-between">
-                    <div className="text-2xl font-semibold text-gray-900">BrandName</div>
+                    <div className="text-2xl font-semibold text-gray-900">
+                        <Link to="/" className="text-gray-700 hover:text-gray-900">Brand Name</Link></div>
                     <div className="hidden md:flex space-x-4">
-                        <Link to="/" className="text-gray-700 hover:text-gray-900">Dashboard</Link>
+                        <Link to="/dashboard" className="text-gray-700 hover:text-gray-900">Dashboard</Link>
                         <Link to="/content-library" className="text-gray-700 hover:text-gray-900">Content Library</Link>
                         <Link to="/consultations" className="text-gray-700 hover:text-gray-900">Consultations</Link>
                         {/* ... add other routes as necessary ... */}

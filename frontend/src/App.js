@@ -24,7 +24,7 @@ import UserContext from './components/UserContext';
 
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);  // Assuming user starts as logged out
+  const [isLoggedIn, setIsLoggedIn] = useState(true);  // Assuming user starts as logged out
 
   return (
     <UserContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
@@ -35,7 +35,7 @@ function App() {
               <Sidebar />
             </div>
           }
-          <div className={isLoggedIn ? "w-4/5 pr-4" : "w-full p-4"}>
+          <div className={isLoggedIn ? "w-4/5 pr-4 pt-4" : "w-full p-4"}>
             <Navbar />
             <div className="flex-grow overflow-y-auto">
               <Routes>

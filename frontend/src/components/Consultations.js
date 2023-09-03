@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const mockData = [
     {
@@ -100,9 +100,17 @@ const mockData = [
 ];
 
 const Consultations = () => {
+    const [showDialog, setShowDialog] = useState(false);
     return (
         <div className="p-6">
-            <h1 className="text-2xl font-bold mb-6">Consultations</h1>
+            <div className="flex justify-between items-center mb-6">
+                <h1 className="text-2xl font-bold">Consultations</h1>
+                <button
+                    className="bg-blue-500 text-white rounded-full px-6 py-2 hover:bg-blue-600"
+                    onClick={() => setShowDialog(true)}>
+                    Add Consultation
+                </button>
+            </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {mockData.map(consultation => (
                     <div key={consultation.id} className="bg-white p-4 rounded-lg shadow-md">
@@ -117,6 +125,45 @@ const Consultations = () => {
                     </div>
                 ))}
             </div>
+
+            {showDialog && (
+                <div className="fixed z-10 inset-0 overflow-y-auto">
+                    <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                        <div className="fixed inset-0 transition-opacity">
+                            <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                        </div>
+
+                        <span className="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+
+                        <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                            <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                <h2 className="text-xl font-bold mb-4">Add Consultant Details</h2>
+                                <input type="text" placeholder="Consultant Name" className="w-full p-2 mb-3 border rounded" />
+                                <input type="text" placeholder="Consultation Topic" className="w-full p-2 mb-3 border rounded" />
+                                <input type="date" className="w-full p-2 mb-3 border rounded" />
+                                <input type="time" className="w-full p-2 mb-3 border rounded" />
+                                <input type="number" placeholder="Spots Left" className="w-full p-2 mb-3 border rounded" />
+                            </div>
+                            <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                                <button
+                                    type="button"
+                                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm"
+                                    onClick={() => setShowDialog(false)}
+                                >
+                                    Add
+                                </button>
+                                <button
+                                    type="button"
+                                    className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:text-gray-500 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                                    onClick={() => setShowDialog(false)}
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

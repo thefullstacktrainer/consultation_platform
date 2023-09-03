@@ -35,7 +35,7 @@ function App() {
               <Sidebar />
             </div>
           }
-          <div className={isLoggedIn ? "w-4/5" : "w-full"}>
+          <div className={isLoggedIn ? "w-4/5 pr-4" : "w-full p-4"}>
             <Navbar />
             <div className="flex-grow overflow-y-auto">
               <Routes>

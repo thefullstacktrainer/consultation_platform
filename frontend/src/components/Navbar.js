@@ -8,7 +8,7 @@ const Navbar = () => {
 
     return (
 
-        <div className="text-gray-802 w-full sticky top-0 z-10  mt-1 mb-1 rounded-lg text-white p-6 bg-gray-800">  {/* <-- Added bg-gray-800 here */}
+        <div className="text-gray-802 w-full sticky top-0 z-10  mt-1 mb-1 rounded-lg text-white p-2 bg-gray-800">  {/* <-- Added bg-gray-800 here */}
             <div className="px-4 py-2 shadow-md rounded">
                 <div className="flex items-center justify-between">
                     <div className="text-2xl font-semibold">

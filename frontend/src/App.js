@@ -24,7 +24,7 @@ import UserContext from './components/UserContext';
 
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);  // Assuming user starts as logged out
+  const [isLoggedIn, setIsLoggedIn] = useState(false);  // Assuming user starts as logged out
 
   return (
     <UserContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>

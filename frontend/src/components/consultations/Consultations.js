@@ -118,7 +118,9 @@ const Consultations = () => {
     const [consultationsData, setConsultationsData] = useState([]);
     useEffect(() => {
         axios.get(baseURL).then((response) => {
-            setConsultationsData(response.data);
+            if (response.status == 202) setConsultationsData([]);
+            else
+                setConsultationsData(response.data);
         });
     }, [apiCalled]);
     const [newConsultation, setNewConsultation] = useState({
@@ -158,9 +160,17 @@ const Consultations = () => {
         });
         setShowCreateDialog(false);
     };
-
+    const deleteConsultant = (id) => {
+        axios
+            .delete(`${baseURL}/${id}`)
+            .then((response) => {
+                console.log(response)
+                setApiCalled(prev => !prev);
+            });
+    }
     const handleDeleteConsultation = (id) => {
         setConsultationsData(prevData => prevData.filter(consultation => consultation.id !== id));
+        deleteConsultant(id);
     };
 
     const [toggleDropdown, setToggleDropdown] = useState(false);

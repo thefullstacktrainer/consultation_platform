@@ -109,7 +109,7 @@ const Consultations = () => {
         setEditConsultation((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleEditConsultation = () => {
+    const handleEditConsultation = (id) => {
         setConsultationsData((prevData) => {
             return prevData.map((consultation) => {
                 if (consultation.id === editConsultation.id) {
@@ -119,7 +119,11 @@ const Consultations = () => {
                 }
             });
         });
-
+        axios
+            .put(`${baseURL}/${id}`, { ...editConsultation })
+            .then((response) => {
+                setApiCalled(prev => !prev);
+            });
         setShowDialog(false);
     };
 
@@ -420,7 +424,7 @@ const Consultations = () => {
                                 <button
                                     type="button"
                                     className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm"
-                                    onClick={handleEditConsultation}
+                                    onClick={() => handleEditConsultation(editConsultation.id)}
                                 >
                                     Save
                                 </button>

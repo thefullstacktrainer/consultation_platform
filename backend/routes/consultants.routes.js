@@ -66,10 +66,10 @@ router.put('/:id', m.mustBeInteger, m.checkFieldsPost, async (req, res) => {
 /* Delete a consultant */
 router.delete('/:id', m.mustBeInteger, async (req, res) => {
     const id = req.params.id
-
+    console.log(id)
     await consultantsModel.deleteConsultant(id)
         .then(consultant => res.json({
-            message: `The consultant #${consultant.id} has been deleted`
+            message: `The consultant #${id} has been deleted`
         }))
         .catch(err => {
             if (err.status) {

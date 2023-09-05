@@ -18,8 +18,9 @@ function mustBeInArray(array, id) {
                 message: `Resource with the ${id} is not found`,
                 status: 404
             })
+        } else {
+            resolve(row)
         }
-        resolve(row)
     })
 }
 

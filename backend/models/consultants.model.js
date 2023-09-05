@@ -20,7 +20,7 @@ function getConsultants() {
     return new Promise((resolve, reject) => {
         if (consultants.length === 0) {
             reject({
-                message: 'no consultants available',
+                message: 'No consultants available',
                 status: 202
             })
         }
@@ -58,9 +58,9 @@ function deleteConsultant(id) {
     return new Promise((resolve, reject) => {
         helper.mustBeInArray(consultants, id)
             .then(() => {
-                consultants = consultants.filter(c => c.id != id)
+                consultants = consultants.filter(c => c.id != id);
                 helper.writeJSONFile(filename, consultants)
-                resolve()
+                resolve({ message: "Deleted" })
             })
             .catch(err => reject(err))
     })

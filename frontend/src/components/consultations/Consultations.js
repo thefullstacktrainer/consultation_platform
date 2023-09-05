@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 const initialConsultations = [
     {
@@ -149,10 +149,23 @@ const Consultations = () => {
         setConsultationsData(prevData => prevData.filter(consultation => consultation.id !== id));
     };
 
-    const [dropdownId, setDropdownId] = useState(null);
+    const [toggleDropdown, setToggleDropdown] = useState(false);
+    const dropdownRef = useRef(null);
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setToggleDropdown(false);
+            }
+        }
 
-    const toggleDropdown = (id) => {
-        setDropdownId(dropdownId === id ? null : id);
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [dropdownRef]);
+
+    const toggleDropdownMenu = (id) => {
+        setToggleDropdown(toggleDropdown === id ? null : id);
     };
 
     const [isConfirmDialogVisible, setIsConfirmDialogVisible] = useState(false);
@@ -173,7 +186,6 @@ const Consultations = () => {
 
     const [editConsultation, setEditConsultation] = useState(null);
     const openEditDialog = (consultation) => {
-        console.log(consultation)
         setEditConsultation(consultation);
         setShowDialog(true);
     };
@@ -233,25 +245,33 @@ const Consultations = () => {
                             </button>
                         </div>
                         <div className="relative flex items-start">
-                            <button className="text-gray-500" onClick={() => toggleDropdown(consultation.id)}>
+                            <button className="text-gray-500" onClick={() => toggleDropdownMenu(consultation.id)}>
                                 ...
                             </button>
-                            {dropdownId === consultation.id && (
-                                <div className="absolute right-0 bg-white border border-gray-200 rounded mt-2 shadow-lg">
+                            {toggleDropdown === consultation.id && (
+                                <div ref={dropdownRef} className="dropdown absolute right-0 bg-white border border-gray-200 rounded mt-2 shadow-lg">
                                     <button
                                         className="block px-4 py-2"
-                                        onClick={() => showConsultationDetails(consultation)}
+                                        onClick={() => {
+                                            showConsultationDetails(consultation);
+                                            setToggleDropdown(false);
+                                        }}
                                     >
                                         Show
                                     </button>
 
-                                    <button className="block px-4 py-2" onClick={() => openEditDialog(consultation)}>Edit</button>
+                                    <button className="block px-4 py-2" onClick={() => {
+                                        openEditDialog(consultation);
+                                        setToggleDropdown(false);
+                                    }}
+                                    >Edit</button>
 
                                     <button
                                         className="block px-4 py-2"
                                         onClick={() => {
                                             setConsultationToDelete(consultation.id);
                                             setIsConfirmDialogVisible(true);
+                                            setToggleDropdown(false);
                                         }}
                                     >
                                         Delete

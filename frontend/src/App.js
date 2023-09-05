@@ -15,7 +15,7 @@ import Earnings from './components/Earnings';
 import Analytics from './components/Analytics';
 import Sidebar from './components/Sidebar';
 import ContentLibrary from './components/ContentLibrary';
-import Consultations from './components/Consultations';
+import Consultations from './components/consultations/Consultations';
 import Navbar from './components/Navbar';
 import Dashboard from './components/Dashboard';
 import Home from './components/Home';

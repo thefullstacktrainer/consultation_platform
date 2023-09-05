@@ -118,7 +118,7 @@ const Consultations = () => {
     const [consultationsData, setConsultationsData] = useState([]);
     useEffect(() => {
         axios.get(baseURL).then((response) => {
-            setConsultationsData(response.data.consultants);
+            setConsultationsData(response.data);
         });
     }, [apiCalled]);
     const [newConsultation, setNewConsultation] = useState({

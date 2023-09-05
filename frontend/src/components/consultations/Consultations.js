@@ -1,120 +1,126 @@
 import React, { useState, useRef, useEffect } from 'react';
-
-const initialConsultations = [
-    {
-        id: 1,
-        topic: "React for Beginners",
-        consultant: "Priya Ranganathan",
-        date: "2023-06-20",
-        time: "14:00",
-        duration: 14,
-        spotsLeft: 5
-    },
-    {
-        id: 2,
-        topic: "Advanced JavaScript",
-        consultant: "Anand Sharma",
-        date: "2023-06-25",
-        time: "16:00",
-        duration: 18,
-        spotsLeft: 3
-    },
-    {
-        id: 3,
-        topic: "Node.js Best Practices",
-        consultant: "Deepak Iyer",
-        date: "2023-07-02",
-        time: "10:00",
-        duration: 7,
-        spotsLeft: 4
-    },
-    {
-        id: 4,
-        topic: "Vue.js Introduction",
-        consultant: "Rohini Ghosh",
-        date: "2023-07-05",
-        time: "11:00",
-        duration: 12,
-        spotsLeft: 2
-    },
-    {
-        id: 5,
-        topic: "Python for Data Science",
-        consultant: "Ritesh Kumar",
-        date: "2023-07-10",
-        time: "13:00",
-        duration: 6,
-        spotsLeft: 5
-    },
-    {
-        id: 6,
-        topic: "Django Web Development",
-        consultant: "Aditi Yadav",
-        date: "2023-07-15",
-        time: "14:00",
-        duration: 15,
-        spotsLeft: 3
-    },
-    {
-        id: 7,
-        topic: "Machine Learning Basics",
-        consultant: "Arjun Singh",
-        date: "2023-08-01",
-        time: "15:00",
-        duration: 20,
-        spotsLeft: 1
-    },
-    {
-        id: 8,
-        topic: "Flutter for Mobile Apps",
-        consultant: "Sneha Roy",
-        date: "2023-08-05",
-        time: "09:00",
-        duration: 19,
-        spotsLeft: 4
-    },
-    {
-        id: 9,
-        topic: "AWS Cloud Services",
-        consultant: "Aman Gupta",
-        date: "2023-08-10",
-        time: "16:00",
-        duration: 10,
-        spotsLeft: 5
-    },
-    {
-        id: 10,
-        topic: "Cybersecurity Basics",
-        consultant: "Manish Raj",
-        date: "2023-08-20",
-        time: "17:00",
-        duration: 8,
-        spotsLeft: 3
-    },
-    {
-        id: 11,
-        topic: "Blockchain & Cryptocurrencies",
-        consultant: "Vaishali Verma",
-        date: "2023-08-25",
-        time: "15:00",
-        duration: 11,
-        spotsLeft: 4
-    },
-    {
-        id: 12,
-        topic: "Database Management",
-        consultant: "Harish Nair",
-        date: "2023-08-28",
-        time: "10:00",
-        duration: 5,
-        spotsLeft: 2
-    }
-];
-
+import axios from 'axios';
+// const initialConsultations = [
+//     {
+//         id: 1,
+//         topic: "React for Beginners",
+//         consultant: "Priya Ranganathan",
+//         date: "2023-06-20",
+//         time: "14:00",
+//         duration: 14,
+//         spotsLeft: 5
+//     },
+//     {
+//         id: 2,
+//         topic: "Advanced JavaScript",
+//         consultant: "Anand Sharma",
+//         date: "2023-06-25",
+//         time: "16:00",
+//         duration: 18,
+//         spotsLeft: 3
+//     },
+//     {
+//         id: 3,
+//         topic: "Node.js Best Practices",
+//         consultant: "Deepak Iyer",
+//         date: "2023-07-02",
+//         time: "10:00",
+//         duration: 7,
+//         spotsLeft: 4
+//     },
+//     {
+//         id: 4,
+//         topic: "Vue.js Introduction",
+//         consultant: "Rohini Ghosh",
+//         date: "2023-07-05",
+//         time: "11:00",
+//         duration: 12,
+//         spotsLeft: 2
+//     },
+//     {
+//         id: 5,
+//         topic: "Python for Data Science",
+//         consultant: "Ritesh Kumar",
+//         date: "2023-07-10",
+//         time: "13:00",
+//         duration: 6,
+//         spotsLeft: 5
+//     },
+//     {
+//         id: 6,
+//         topic: "Django Web Development",
+//         consultant: "Aditi Yadav",
+//         date: "2023-07-15",
+//         time: "14:00",
+//         duration: 15,
+//         spotsLeft: 3
+//     },
+//     {
+//         id: 7,
+//         topic: "Machine Learning Basics",
+//         consultant: "Arjun Singh",
+//         date: "2023-08-01",
+//         time: "15:00",
+//         duration: 20,
+//         spotsLeft: 1
+//     },
+//     {
+//         id: 8,
+//         topic: "Flutter for Mobile Apps",
+//         consultant: "Sneha Roy",
+//         date: "2023-08-05",
+//         time: "09:00",
+//         duration: 19,
+//         spotsLeft: 4
+//     },
+//     {
+//         id: 9,
+//         topic: "AWS Cloud Services",
+//         consultant: "Aman Gupta",
+//         date: "2023-08-10",
+//         time: "16:00",
+//         duration: 10,
+//         spotsLeft: 5
+//     },
+//     {
+//         id: 10,
+//         topic: "Cybersecurity Basics",
+//         consultant: "Manish Raj",
+//         date: "2023-08-20",
+//         time: "17:00",
+//         duration: 8,
+//         spotsLeft: 3
+//     },
+//     {
+//         id: 11,
+//         topic: "Blockchain & Cryptocurrencies",
+//         consultant: "Vaishali Verma",
+//         date: "2023-08-25",
+//         time: "15:00",
+//         duration: 11,
+//         spotsLeft: 4
+//     },
+//     {
+//         id: 12,
+//         topic: "Database Management",
+//         consultant: "Harish Nair",
+//         date: "2023-08-28",
+//         time: "10:00",
+//         duration: 5,
+//         spotsLeft: 2
+//     }
+// ];
+const baseURL = "http://localhost:5000/api/v1/consultants";
 const Consultations = () => {
 
     const [showDialog, setShowDialog] = useState(false);
-    const [consultationsData, setConsultationsData] = useState(initialConsultations);
+    const [apiCalled, setApiCalled] = useState(false);
+    const [consultationsData, setConsultationsData] = useState([]);
+    useEffect(() => {
+        axios.get(baseURL).then((response) => {
+            setConsultationsData(response.data.consultants);
+        });
+    }, [apiCalled]);
     const [newConsultation, setNewConsultation] = useState({
         consultant: "",
         topic: "",
@@ -123,6 +129,13 @@ const Consultations = () => {
         duration: "",
         spotsLeft: ""
     });
+    const createConsultant = (newConsultation) => {
+        axios
+            .post(baseURL, { ...newConsultation })
+            .then((response) => {
+                setApiCalled(prev => !prev);
+            });
+    }
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -133,6 +146,7 @@ const Consultations = () => {
     };
 
     const handleAddConsultation = () => {
+        createConsultant(newConsultation);
         setConsultationsData(prevData => [...prevData, newConsultation]);
         setNewConsultation({
             consultant: "",

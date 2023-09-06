@@ -63,7 +63,7 @@ function AddConsultant({ setConsultationsData, setShowCreateDialog,
             errors.duration = "Duration must be greater than 0";
         }
 
-        if (!newConsultation.time || newConsultation.spotsLeft === undefined || newConsultation.spotsLeft === null || newConsultation.spotsLeft < 0) {
+        if (!newConsultation.spotsLeft || newConsultation.spotsLeft === undefined || newConsultation.spotsLeft === null || newConsultation.spotsLeft < 0) {
             errors.spotsLeft = "Spots Left must be 0 or more";
         }
 

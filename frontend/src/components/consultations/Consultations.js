@@ -5,7 +5,6 @@ import ShowConsultant from './ShowConsultant';
 import EditConsultant from './EditConsultant';
 import DeleteConsultant from './DeleteConsultant';
 import DisplayConsultants from './DisplayConsultants';
-import process from 'process';
 
 const Consultations = () => {
 

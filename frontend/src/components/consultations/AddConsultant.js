@@ -1,6 +1,5 @@
 import React from 'react'
 import axios from 'axios'
-import process from 'process';
 
 function AddConsultant({ setConsultationsData, setShowCreateDialog,
     setNewConsultation, newConsultation, setApiCalled }) {

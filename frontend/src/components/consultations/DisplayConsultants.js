@@ -1,7 +1,26 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
-function DisplayConsultants({ consultationsData, toggleDropdownMenu, showConsultationDetails, setToggleDropdown,
-    openEditDialog, setConsultationToDelete, setIsConfirmDialogVisible, toggleDropdown, dropdownRef }) {
+function DisplayConsultants({ consultationsData, showConsultationDetails,
+    openEditDialog, setConsultationToDelete, setIsConfirmDialogVisible }) {
+
+    const [toggleDropdown, setToggleDropdown] = useState(false);
+    const dropdownRef = useRef(null);
+    const toggleDropdownMenu = (id) => {
+        setToggleDropdown(toggleDropdown === id ? null : id);
+    };
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setToggleDropdown(false);
+            }
+        }
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [dropdownRef]);
+
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {consultationsData.map((consultation, index) => (

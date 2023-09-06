@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AddConsultant from './AddConsultant';
 import ShowConsultant from './ShowConsultant';
@@ -38,6 +38,7 @@ const Consultations = () => {
             console.log(error.config);
         });
     }, [apiCalled]);
+
     const [newConsultation, setNewConsultation] = useState({
         consultant: "",
         topic: "",
@@ -93,24 +94,10 @@ const Consultations = () => {
         deleteConsultant(id);
     };
 
-    const [toggleDropdown, setToggleDropdown] = useState(false);
-    const dropdownRef = useRef(null);
-    useEffect(() => {
-        function handleClickOutside(event) {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-                setToggleDropdown(false);
-            }
-        }
 
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, [dropdownRef]);
 
-    const toggleDropdownMenu = (id) => {
-        setToggleDropdown(toggleDropdown === id ? null : id);
-    };
+
+
 
     const [isConfirmDialogVisible, setIsConfirmDialogVisible] = useState(false);
     const [consultationToDelete, setConsultationToDelete] = useState(null);
@@ -181,14 +168,11 @@ const Consultations = () => {
                 </button>
             </div>
             <DisplayConsultants consultationsData={consultationsData}
-                toggleDropdownMenu={toggleDropdownMenu}
                 showConsultationDetails={showConsultationDetails}
-                setToggleDropdown={setToggleDropdown}
                 openEditDialog={openEditDialog}
                 setConsultationToDelete={setConsultationToDelete}
                 setIsConfirmDialogVisible={setIsConfirmDialogVisible}
-                toggleDropdown={toggleDropdown}
-                dropdownRef={dropdownRef} />
+            />
 
             {showCreateDialog &&
                 <AddConsultant newConsultation={newConsultation}

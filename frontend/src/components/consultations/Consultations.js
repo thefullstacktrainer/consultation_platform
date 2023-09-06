@@ -5,16 +5,24 @@ import ShowConsultant from './ShowConsultant';
 import EditConsultant from './EditConsultant';
 import DeleteConsultant from './DeleteConsultant';
 import DisplayConsultants from './DisplayConsultants';
+import process from 'process';
 
-const baseURL = "http://localhost:5000/api/v1/consultants";
 const Consultations = () => {
 
     const [showEditDialog, setShowEditDialog] = useState(false);
     const [apiCalled, setApiCalled] = useState(false);
     const [consultationsData, setConsultationsData] = useState([]);
 
+    const [newConsultation, setNewConsultation] = useState({
+        consultant: "",
+        topic: "",
+        date: "",
+        time: "",
+        duration: "",
+        spotsLeft: ""
+    });
     useEffect(() => {
-        axios.get(baseURL).then((response) => {
+        axios.get(process.env.REACT_APP_BASE_URL).then((response) => {
             if (response.status == 202) setConsultationsData([]);
             else
                 setConsultationsData(response.data);
@@ -39,48 +47,9 @@ const Consultations = () => {
         });
     }, [apiCalled]);
 
-    const [newConsultation, setNewConsultation] = useState({
-        consultant: "",
-        topic: "",
-        date: "",
-        time: "",
-        duration: "",
-        spotsLeft: ""
-    });
-    const createConsultant = (newConsultation) => {
-        axios
-            .post(baseURL, { ...newConsultation })
-            .then((response) => {
-                setApiCalled(prev => !prev);
-            }).catch(function (error) {
-                console.log(error)
-            })
-    }
-
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setNewConsultation(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
-
-    const handleAddConsultation = () => {
-        createConsultant(newConsultation);
-        setConsultationsData(prevData => [...prevData, newConsultation]);
-        setNewConsultation({
-            consultant: "",
-            topic: "",
-            date: "",
-            time: "",
-            duration: "",
-            spotsLeft: ""
-        });
-        setShowCreateDialog(false);
-    };
     const deleteConsultant = (id) => {
         axios
-            .delete(`${baseURL}/${id}`)
+            .delete(`${process.env.REACT_APP_BASE_URL}/${id}`)
             .then((response) => {
                 console.log(response)
                 setApiCalled(prev => !prev);
@@ -93,11 +62,6 @@ const Consultations = () => {
         setConsultationsData(prevData => prevData.filter(consultation => consultation.id !== id));
         deleteConsultant(id);
     };
-
-
-
-
-
 
     const [isConfirmDialogVisible, setIsConfirmDialogVisible] = useState(false);
     const [consultationToDelete, setConsultationToDelete] = useState(null);
@@ -136,7 +100,7 @@ const Consultations = () => {
             });
         });
         axios
-            .put(`${baseURL}/${id}`, { ...editConsultation })
+            .put(`${process.env.REACT_APP_BASE_URL}/${id}`, { ...editConsultation })
             .then((response) => {
                 setApiCalled(prev => !prev);
             }).catch(function (error) {
@@ -175,10 +139,11 @@ const Consultations = () => {
             />
 
             {showCreateDialog &&
-                <AddConsultant newConsultation={newConsultation}
-                    handleInputChange={handleInputChange}
-                    handleAddConsultation={handleAddConsultation}
-                    setShowCreateDialog={setShowCreateDialog} />}
+                <AddConsultant setConsultationsData={setConsultationsData}
+                    newConsultation={newConsultation}
+                    setNewConsultation={setNewConsultation}
+                    setShowCreateDialog={setShowCreateDialog}
+                    setApiCalled={setApiCalled} />}
 
             {isConfirmDialogVisible
                 && <DeleteConsultant confirmDeleteConsultation={confirmDeleteConsultation}

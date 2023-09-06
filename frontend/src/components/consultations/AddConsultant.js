@@ -1,6 +1,41 @@
 import React from 'react'
+import axios from 'axios'
+import process from 'process';
 
-function AddConsultant({ newConsultation, handleInputChange, handleAddConsultation, setShowCreateDialog }) {
+function AddConsultant({ setConsultationsData, setShowCreateDialog,
+    setNewConsultation, newConsultation, setApiCalled }) {
+
+    const createConsultant = (newConsultation) => {
+        axios
+            .post(process.env.REACT_APP_BASE_URL, { ...newConsultation })
+            .then((response) => {
+                setApiCalled(prev => !prev);
+            }).catch(function (error) {
+                console.log(error)
+            })
+    }
+
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setNewConsultation(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    const handleAddConsultation = () => {
+        createConsultant(newConsultation);
+        setConsultationsData(prevData => [...prevData, newConsultation]);
+        setNewConsultation({
+            consultant: "",
+            topic: "",
+            date: "",
+            time: "",
+            duration: "",
+            spotsLeft: ""
+        });
+        setShowCreateDialog(false);
+    };
     console.log("AddConsultant called ")
     return (
         <div className="fixed z-10 inset-0 overflow-y-auto">

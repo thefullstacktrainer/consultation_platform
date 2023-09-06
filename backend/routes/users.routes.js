@@ -2,13 +2,14 @@ const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const users = [];
+const users = require('../models/users.model')
 router.post('/register', async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
-        const user = { name: req.body.name, password: hashedPassword };
-        users.push(user);
-        res.status(201).send();
+        const user = { name: req.body.username, password: hashedPassword };
+        users.registerUser(user)
+            .then(data => res.status(201).send())
+            .catch(error => res.status(500).send())
     } catch {
         res.status(500).send();
     }

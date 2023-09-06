@@ -1,6 +1,31 @@
 import React from 'react'
+import axios from 'axios'
 
-function DeleteConsultant({ confirmDeleteConsultation, setIsConfirmDialogVisible }) {
+function DeleteConsultant({ setConsultationsData, setIsConfirmDialogVisible,
+    setApiCalled, setConsultationToDelete, consultationToDelete }) {
+    const deleteConsultant = (id) => {
+        axios
+            .delete(`${process.env.REACT_APP_BASE_URL}/${id}`)
+            .then((response) => {
+                console.log(response)
+                setApiCalled(prev => !prev);
+            }).catch(function (error) {
+                console.log(error)
+                setApiCalled(prev => !prev);
+            });
+    }
+    const handleDeleteConsultation = (id) => {
+        setConsultationsData(prevData => prevData.filter(consultation => consultation.id !== id));
+        deleteConsultant(id);
+    };
+    const confirmDeleteConsultation = () => {
+        if (consultationToDelete !== null) {
+            handleDeleteConsultation(consultationToDelete);
+            setConsultationToDelete(null);
+            setIsConfirmDialogVisible(false);
+        }
+    };
+
     return (
         <div className="fixed z-10 inset-0 overflow-y-auto">
             <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">

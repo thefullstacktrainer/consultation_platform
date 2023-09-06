@@ -46,33 +46,8 @@ const Consultations = () => {
         });
     }, [apiCalled]);
 
-    const deleteConsultant = (id) => {
-        axios
-            .delete(`${process.env.REACT_APP_BASE_URL}/${id}`)
-            .then((response) => {
-                console.log(response)
-                setApiCalled(prev => !prev);
-            }).catch(function (error) {
-                console.log(error)
-                setApiCalled(prev => !prev);
-            });
-    }
-    const handleDeleteConsultation = (id) => {
-        setConsultationsData(prevData => prevData.filter(consultation => consultation.id !== id));
-        deleteConsultant(id);
-    };
-
     const [isConfirmDialogVisible, setIsConfirmDialogVisible] = useState(false);
     const [consultationToDelete, setConsultationToDelete] = useState(null);
-
-    const confirmDeleteConsultation = () => {
-        if (consultationToDelete !== null) {
-            handleDeleteConsultation(consultationToDelete);
-            setConsultationToDelete(null);
-            setIsConfirmDialogVisible(false);
-        }
-    };
-
     const [consultationToShow, setConsultationToShow] = useState(null);
     const showConsultationDetails = (consultation) => {
         setConsultationToShow(consultation);
@@ -145,8 +120,11 @@ const Consultations = () => {
                     setApiCalled={setApiCalled} />}
 
             {isConfirmDialogVisible
-                && <DeleteConsultant confirmDeleteConsultation={confirmDeleteConsultation}
-                    setIsConfirmDialogVisible={setIsConfirmDialogVisible} />}
+                && <DeleteConsultant setIsConfirmDialogVisible={setIsConfirmDialogVisible}
+                    setConsultationsData={setConsultationsData}
+                    setApiCalled={setApiCalled}
+                    setConsultationToDelete={setConsultationToDelete}
+                    consultationToDelete={consultationToDelete} />}
 
             {consultationToShow
                 && <ShowConsultant consultationToShow={consultationToShow}

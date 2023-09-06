@@ -12,6 +12,7 @@ const Consultations = () => {
     const [showEditDialog, setShowEditDialog] = useState(false);
     const [apiCalled, setApiCalled] = useState(false);
     const [consultationsData, setConsultationsData] = useState([]);
+
     useEffect(() => {
         axios.get(baseURL).then((response) => {
             if (response.status == 202) setConsultationsData([]);
@@ -84,6 +85,7 @@ const Consultations = () => {
                 setApiCalled(prev => !prev);
             }).catch(function (error) {
                 console.log(error)
+                setApiCalled(prev => !prev);
             });
     }
     const handleDeleteConsultation = (id) => {

@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-function mustBeInteger(req, res, next) {
+const mustBeInteger = (req, res, next) => {
     const id = req.params.id
 
     if (!Number.isInteger(parseInt(id))) {
@@ -10,17 +10,16 @@ function mustBeInteger(req, res, next) {
     }
 }
 
-function checkFieldsPost(req, res, next) {
+const checkFieldsPost = (req, res, next) => {
     const { title, content, tags } = req.body
-    next();
-    // if (title && content && tags) {
-    //     next()
-    // } else {
-    //     res.status(400).json({ message: 'fields are not good' })
-    // }
+    if (title && content && tags) {
+        next()
+    } else {
+        res.status(400).json({ message: 'fields are not good' })
+    }
 }
 
-function checkUserFields(req, res, next) {
+const checkUserFields = (req, res, next) => {
     const { email, username, password } = req.body;
     if (email || username && password) {
         next()
@@ -29,7 +28,7 @@ function checkUserFields(req, res, next) {
     }
 }
 
-function authenticateToken(req, res, next) {
+const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
 

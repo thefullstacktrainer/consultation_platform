@@ -2,7 +2,7 @@ let posts = require('../data/posts.json')
 const filename = './data/posts.json'
 const helper = require('../helpers/helper.js')
 
-function getPosts() {
+const getPosts = () => {
     return new Promise((resolve, reject) => {
         if (posts.length === 0) {
             reject({
@@ -15,7 +15,7 @@ function getPosts() {
     })
 }
 
-function getPost(id) {
+const getPost = id => {
     return new Promise((resolve, reject) => {
         helper.mustBeInArray(posts, id)
             .then(post => resolve(post))
@@ -23,7 +23,7 @@ function getPost(id) {
     })
 }
 
-function insertPost(newPost) {
+const insertPost = newPost => {
     return new Promise((resolve, reject) => {
         const id = { id: helper.getNewId(posts) }
         const date = {
@@ -37,7 +37,7 @@ function insertPost(newPost) {
     })
 }
 
-function updatePost(id, newPost) {
+const updatePost = (id, newPost) => {
     return new Promise((resolve, reject) => {
         helper.mustBeInArray(posts, id)
             .then(post => {
@@ -55,7 +55,7 @@ function updatePost(id, newPost) {
     })
 }
 
-function deletePost(id) {
+const deletePost = id => {
     return new Promise((resolve, reject) => {
         helper.mustBeInArray(posts, id)
             .then(() => {

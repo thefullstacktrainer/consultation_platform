@@ -2,7 +2,7 @@ let consultants = require('../data/consultants.json')
 const filename = './data/consultants.json'
 const helper = require('../helpers/helper.js')
 
-function insertConsultant(newConsultant) {
+const insertConsultant = newConsultant => {
     return new Promise((resolve, reject) => {
         const id = { id: helper.getNewId(consultants) }
         const date = {
@@ -16,7 +16,7 @@ function insertConsultant(newConsultant) {
     })
 }
 
-function getConsultants() {
+const getConsultants = () => {
     return new Promise((resolve, reject) => {
         if (consultants.length === 0) {
             reject({
@@ -28,7 +28,7 @@ function getConsultants() {
     })
 }
 
-function getConsultantById(id) {
+const getConsultantById = id => {
     return new Promise((resolve, reject) => {
         helper.mustBeInArray(consultants, id)
             .then(consultant => resolve(consultant))
@@ -36,7 +36,7 @@ function getConsultantById(id) {
     })
 }
 
-function updateConsultant(id, updatedData) {
+const updateConsultant = (id, updatedData) => {
     return new Promise((resolve, reject) => {
         helper.mustBeInArray(consultants, id)
             .then(consultant => {
@@ -54,7 +54,7 @@ function updateConsultant(id, updatedData) {
     })
 }
 
-function deleteConsultant(id) {
+const deleteConsultant = id => {
     return new Promise((resolve, reject) => {
         helper.mustBeInArray(consultants, id)
             .then(() => {

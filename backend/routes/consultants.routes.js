@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
 })
 
 // /* Insert a new consultant */
-router.post('/', m.checkFieldsPost, async (req, res) => {
+router.post('/', async (req, res) => {
     console.log(req.body)
     await consultantsModel.insertConsultant(req.body)
         .then(consultant => res.status(201).json({

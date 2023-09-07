@@ -18,5 +18,9 @@ app.use(require('./routes/index.routes'))
 app.get('/', (req, res) => {
     res.json({ message: 'Hello world' })
 })
+// health check
+app.get('/health', (req, res) => {
+    res.json({ message: 'Hello Check' })
+})
 // Starting server
 app.listen('5000', () => console.log("Started app in 5000 port"))

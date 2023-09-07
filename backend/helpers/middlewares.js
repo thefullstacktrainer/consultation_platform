@@ -28,6 +28,15 @@ const checkUserFields = (req, res, next) => {
     }
 }
 
+const checkLoginFields = (req, res, next) => {
+    const { identifier, password } = req.body;
+    if (identifier && password) {
+        next()
+    } else {
+        res.status(400).json({ message: 'fields are missing' })
+    }
+}
+
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
@@ -47,5 +56,6 @@ module.exports = {
     mustBeInteger,
     checkFieldsPost,
     authenticateToken,
-    checkUserFields
+    checkUserFields,
+    checkLoginFields
 }

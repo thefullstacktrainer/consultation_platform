@@ -16,7 +16,7 @@ router.post('/register', m.checkUserFields, async (req, res) => {
     }
 });
 
-router.post('/login', m.checkUserFields, async (req, res) => {
+router.post('/login', m.checkLoginFields, async (req, res) => {
     users.loginUser(req.body)
         .then(user => {
             res.status(200).send({ user });

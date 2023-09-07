@@ -26,7 +26,7 @@ const registerUser = newUserInfo => {
 
 const loginUser = userInfo => {
     return new Promise(async (resolve, reject) => {
-        const user = users.find(user => user.username === userInfo.username || user.email === userInfo.email)
+        const user = users.find(user => user.username === userInfo.identifier || user.email === userInfo.identifier)
         if (user == null) {
             reject({ message: "user is not found" });
         } else {

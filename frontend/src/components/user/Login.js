@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
-    const [formData, setFormData] = useState({ username: '', email: '', password: '' });
-    const [errors, setErrors] = useState({ username: '', email: '', password: '', general: '' });
+    const [formData, setFormData] = useState({ identifier: '', password: '' });
+    const [errors, setErrors] = useState({ identifier: '', password: '', general: '' });
+
+    const navigate = useNavigate(); // Hook to handle navigation
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -15,19 +18,11 @@ function Login() {
 
     const validateInput = () => {
         let valid = true;
-        let tempErrors = { username: '', email: '', password: '' };
+        let tempErrors = { identifier: '', password: '' };
 
-        if (!formData.username) {
+        if (!formData.identifier) {
             valid = false;
-            tempErrors.username = 'Username is required';
-        }
-
-        if (!formData.email) {
-            valid = false;
-            tempErrors.email = 'Email is required';
-        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-            valid = false;
-            tempErrors.email = 'Email is not valid';
+            tempErrors.identifier = 'Username or Email is required';
         }
 
         if (!formData.password) {
@@ -45,7 +40,16 @@ function Login() {
             try {
                 const response = await axios.post('http://localhost:5000/api/v1/users/login', formData);
                 console.log('Login successful:', response.data);
-                // Handle successful login here (e.g., set user data in state, redirect to dashboard)
+
+                // Save token to session storage
+                console.log(response)
+                if (response.data?.user?.accessToken) {
+                    sessionStorage.setItem('authToken', response.data.user.accessToken);
+                    navigate('/dashboard'); // Navigate to dashboard
+                } else {
+                    // Handle case where response does not contain a token
+                    setErrors({ general: 'No token received' });
+                }
             } catch (error) {
                 console.error('Error during login:', error);
                 if (error.response) {
@@ -65,28 +69,16 @@ function Login() {
             {errors.general && <span className="block text-red-500 text-sm mb-4">{errors.general}</span>}
             <form onSubmit={handleSubmit}>
                 <div className="mb-4">
-                    <label className="block mb-1" htmlFor="username">Username</label>
+                    <label className="block mb-1" htmlFor="identifier">Username or Email</label>
                     <input
                         type="text"
-                        id="username"
-                        name="username"
-                        value={formData.username}
+                        id="identifier"
+                        name="identifier"
+                        value={formData.identifier}
                         onChange={handleInputChange}
                         className="w-full p-2 border border-gray-300 rounded"
                     />
-                    {errors.username && <span className="text-red-500 text-sm">{errors.username}</span>}
-                </div>
-                <div className="mb-4">
-                    <label className="block mb-1" htmlFor="email">Email</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        className="w-full p-2 border border-gray-300 rounded"
-                    />
-                    {errors.email && <span className="text-red-500 text-sm">{errors.email}</span>}
+                    {errors.identifier && <span className="text-red-500 text-sm">{errors.identifier}</span>}
                 </div>
                 <div className="mb-4">
                     <label className="block mb-1" htmlFor="password">Password</label>

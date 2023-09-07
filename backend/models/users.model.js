@@ -35,7 +35,6 @@ function loginUser(userInfo) {
                     // 'result' will be true if the passwords match, false otherwise
                     if (result) {
                         const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
-                        console.log("test1")
                         resolve({ accessToken });
                     } else {
                         reject({ message: 'Not Allowed' });

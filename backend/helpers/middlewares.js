@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+
 function mustBeInteger(req, res, next) {
     const id = req.params.id
 
@@ -18,7 +20,23 @@ function checkFieldsPost(req, res, next) {
     // }
 }
 
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+
+    if (token == null) return res.sendStatus(401);
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+
+        if (err) return res.sendStatus(403);
+        const { username, id } = { ...user };
+        req.user = { username, id };
+        next();
+    });
+}
+
 module.exports = {
     mustBeInteger,
-    checkFieldsPost
+    checkFieldsPost,
+    authenticateToken
 }

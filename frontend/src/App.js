@@ -20,7 +20,8 @@ import Navbar from './components/Navbar';
 import Dashboard from './components/Dashboard';
 import Home from './components/Home';
 import UserContext from './components/UserContext';
-
+import Register from './components/user/Register';
+import Login from './components/user/Login';
 
 
 function App() {
@@ -40,6 +41,8 @@ function App() {
             <div className="flex-grow overflow-y-auto">
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/login" element={<Login />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/my-profile" element={<MyProfile />} />
                 <Route path="/my-content" element={<MyContent />} />

@@ -4,10 +4,7 @@ import Register from './user/Register'
 
 function Home() {
     return (
-        <div>Home
-            <Login />
-            <Register />
-        </div>
+        <div>Home</div>
     )
 }
 

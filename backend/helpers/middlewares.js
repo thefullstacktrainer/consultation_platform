@@ -20,6 +20,15 @@ function checkFieldsPost(req, res, next) {
     // }
 }
 
+function checkUserFields(req, res, next) {
+    const { email, username, password } = req.body;
+    if (email || username && password) {
+        next()
+    } else {
+        res.status(400).json({ message: 'fields are missing' })
+    }
+}
+
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
@@ -29,8 +38,8 @@ function authenticateToken(req, res, next) {
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
 
         if (err) return res.sendStatus(403);
-        const { username, id } = { ...user };
-        req.user = { username, id };
+        const { username, id, email } = { ...user };
+        req.user = { username, id, email };
         next();
     });
 }
@@ -38,5 +47,6 @@ function authenticateToken(req, res, next) {
 module.exports = {
     mustBeInteger,
     checkFieldsPost,
-    authenticateToken
+    authenticateToken,
+    checkUserFields
 }

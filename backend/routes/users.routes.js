@@ -2,7 +2,9 @@ const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcrypt');
 const users = require('../models/users.model')
-router.post('/register', async (req, res) => {
+const m = require('../helpers/middlewares')
+
+router.post('/register', m.checkUserFields, async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
         const user = { email: req.body.email, username: req.body.username, password: hashedPassword };
@@ -14,7 +16,7 @@ router.post('/register', async (req, res) => {
     }
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', m.checkUserFields, async (req, res) => {
     users.loginUser(req.body)
         .then(user => {
             res.status(200).send({ user });

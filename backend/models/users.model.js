@@ -7,15 +7,20 @@ const jwt = require('jsonwebtoken');
 
 function registerUser(newUserInfo) {
     return new Promise((resolve, reject) => {
-        const id = { id: helper.getNewId(users) }
-        const date = {
-            createdAt: helper.newDate(),
-            updatedAt: helper.newDate()
+        const user = users.find(user => user.username === userInfo.username)
+        if (user != null) {
+            reject({ message: "username is already taken" });
+        } else {
+            const id = { id: helper.getNewId(users) }
+            const date = {
+                createdAt: helper.newDate(),
+                updatedAt: helper.newDate()
+            }
+            newUserInfo = { ...newUserInfo, ...date, ...id, }
+            users.push(newUserInfo)
+            helper.writeJSONFile(filename, users)
+            resolve(newUserInfo)
         }
-        newUserInfo = { ...newUserInfo, ...date, ...id, }
-        users.push(newUserInfo)
-        helper.writeJSONFile(filename, users)
-        resolve(newUserInfo)
     })
 }
 

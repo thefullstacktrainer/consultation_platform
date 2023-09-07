@@ -5,7 +5,7 @@ const users = require('../models/users.model')
 router.post('/register', async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
-        const user = { username: req.body.username, password: hashedPassword };
+        const user = { email: req.body.email, username: req.body.username, password: hashedPassword };
         users.registerUser(user)
             .then(data => res.status(201).send({ username: data.username, message: "User is created" }))
             .catch(error => res.status(500).send({ error }))

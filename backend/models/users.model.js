@@ -26,7 +26,6 @@ function loginUser(userInfo) {
             reject({ message: "user is not found" });
         } else {
             try {
-                console.log("wer are", userInfo.password, user.password)
                 bcrypt.compare(userInfo.password, user.password, function (err, result) {
                     // 'result' will be true if the passwords match, false otherwise
                     if (result) {

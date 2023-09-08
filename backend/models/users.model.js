@@ -49,7 +49,8 @@ const loginUser = userInfo => {
 
 const getProfile = userInfo => {
     return new Promise(async (resolve, reject) => {
-        const user = users.find(user => user.username === userInfo.identifier || user.email === userInfo.identifier)
+        const user = users.find(user => user.username === userInfo.username || user.email === userInfo.email)
+        console.log(user, "dd")
         if (user == null) {
             reject({ message: "user is not found" });
         } else {

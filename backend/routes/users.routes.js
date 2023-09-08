@@ -26,7 +26,7 @@ router.post('/login', m.checkLoginFields, async (req, res) => {
 });
 
 router.get('/profile', m.authenticateToken, async (req, res) => {
-    users.getProfile(req.body)
+    users.getProfile(req.user)
         .then(user => {
             res.status(200).send({ user });
         })

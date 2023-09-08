@@ -21,7 +21,6 @@ const checkFieldsPost = (req, res, next) => {
 
 const checkUserFields = (req, res, next) => {
     const { email, username, password } = req.body;
-    console.log((email || username))
     if ((email || username) && password) {
         next()
     } else {

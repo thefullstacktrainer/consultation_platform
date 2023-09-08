@@ -9,7 +9,7 @@ const registerUser = newUserInfo => {
     return new Promise((resolve, reject) => {
         const user = users.find(user => (user.username === newUserInfo.username || user.email === newUserInfo.email))
         if (user != null) {
-            reject({ message: "username is already taken" });
+            reject({ message: "username || email is already registered" });
         } else {
             const id = { id: helper.getNewId(users) }
             const date = {

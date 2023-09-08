@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 
 const registerUser = newUserInfo => {
     return new Promise((resolve, reject) => {
-        const user = users.find(user => (user.username === userInfo.username || user.email === userInfo.email))
+        const user = users.find(user => (user.username === newUserInfo.username || user.email === newUserInfo.email))
         if (user != null) {
             reject({ message: "username is already taken" });
         } else {

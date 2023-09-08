@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 
 const registerUser = newUserInfo => {
     return new Promise((resolve, reject) => {
-        const user = users.find(user => user.username === userInfo.username)
+        const user = users.find(user => (user.username === userInfo.username || user.email === userInfo.email))
         if (user != null) {
             reject({ message: "username is already taken" });
         } else {
@@ -47,7 +47,21 @@ const loginUser = userInfo => {
     })
 }
 
+const getProfile = userInfo => {
+    return new Promise(async (resolve, reject) => {
+        const user = users.find(user => user.username === userInfo.identifier || user.email === userInfo.identifier)
+        if (user == null) {
+            reject({ message: "user is not found" });
+        } else {
+            const { profile, id, email, username } = user;
+            const currentUser = { profile, id, username, email }
+            resolve({ ...currentUser })
+        }
+    })
+}
+
 module.exports = {
     registerUser,
-    loginUser
+    loginUser,
+    getProfile
 }

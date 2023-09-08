@@ -25,4 +25,13 @@ router.post('/login', m.checkLoginFields, async (req, res) => {
 
 });
 
+router.get('/profile', m.authenticateToken, async (req, res) => {
+    users.getProfile(req.body)
+        .then(user => {
+            res.status(200).send({ user });
+        })
+        .catch(error => res.status(400).send({ error }))
+
+});
+
 module.exports = router

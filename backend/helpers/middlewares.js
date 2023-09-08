@@ -21,7 +21,8 @@ const checkFieldsPost = (req, res, next) => {
 
 const checkUserFields = (req, res, next) => {
     const { email, username, password } = req.body;
-    if (email || username && password) {
+    console.log((email || username))
+    if ((email || username) && password) {
         next()
     } else {
         res.status(400).json({ message: 'fields are missing' })

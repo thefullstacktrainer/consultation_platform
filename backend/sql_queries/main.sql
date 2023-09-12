@@ -6,8 +6,7 @@ CREATE TABLE
         name VARCHAR(255) NOT NULL,
         profile_picture VARCHAR(255),
         email VARCHAR(255) NOT NULL,
-        verification_method VARCHAR(50),
-        -- Add other user-related fields as needed
+        verification_method VARCHAR(50)
     );
 
 -- Create a table to store user profile details

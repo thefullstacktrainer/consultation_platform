@@ -9,7 +9,41 @@ async function getConsultations() {
     }
 }
 
+async function createConsultant(consultationData) {
+    try {
+        const sql = `
+            INSERT INTO consultations (topic, consultant_name, date, from_time, to_time, duration, spotsLeft) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        `;
+        const {
+            topic,
+            consultant_name,
+            date,
+            from_time,
+            to_time,
+            duration,
+            spotsLeft
+        } = consultationData;
+
+        const params = [
+            topic,
+            consultant_name,
+            date,
+            from_time,
+            to_time,
+            duration,
+            spotsLeft
+        ];
+
+        const results = await connection.query(sql, params);
+        return results;
+    } catch (error) {
+        throw { status: 500, message: 'Database insertion error', details: error };
+    }
+
+}
 
 module.exports = {
-    getConsultations
+    getConsultations,
+    createConsultant
 }

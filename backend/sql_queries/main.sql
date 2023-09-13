@@ -1046,3 +1046,32 @@ CREATE TABLE
         related_id INT,
         FOREIGN KEY (user_id) REFERENCES users(user_id)
     );
+
+select * from user_profiles where expertise_areas LIKE '%Education%';
+
+consultation_rates expertise_areas 
+
+select * from users where user_id IN (4,14);
+
+name email 
+
+select
+    u.name,
+    u.email,
+    up.expertise_areas,
+    up.consultation_rates
+from
+    users as u,
+    user_profiles as up
+where
+    u.user_id = up.user_id
+    and up.expertise_areas LIKE '%Education%';
+
+select u.name, u.email
+from users as u
+where u.user_id in (
+        select up2.user_id
+        from user_profiles up2
+        where
+            up2.expertise_areas LIKE '%Education%'
+    );

@@ -1,3 +1,9 @@
+drop DATABASE consultation_platform;
+
+create DATABASE consultation_platform;
+
+use consultation_platform;
+
 -- Create a table to store user information
 
 CREATE TABLE
@@ -323,3 +329,154 @@ where (
         or role_name = 'publisher'
     )
     and users.user_id = user_roles.user_id;
+
+-- Create a 'content' table with relevant fields
+
+CREATE TABLE
+    content (
+        content_id INT AUTO_INCREMENT PRIMARY KEY,
+        title VARCHAR(255) NOT NULL,
+        content_text TEXT,
+        created_by INT NOT NULL,
+        -- User ID of the content creator
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        visibility ENUM('public', 'private') DEFAULT 'public',
+        -- Public or private content
+        status ENUM(
+            'draft',
+            'published',
+            'archived'
+        ) DEFAULT 'draft',
+        views INT DEFAULT 0,
+        -- Number of views
+        likes INT DEFAULT 0,
+        -- Number of likes
+        shares INT DEFAULT 0 -- Number of shares
+        -- Add other relevant fields as needed
+    );
+
+-- Create a table for content categories
+
+CREATE TABLE
+    content_categories (
+        category_id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        description TEXT,
+        image_url VARCHAR(255),
+        created_by INT NOT NULL,
+        -- User ID of the creator (admin or authorized publisher)
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (created_by) REFERENCES users(user_id) -- Assuming 'users' table for admins and publishers
+    );
+
+-- Create a table to associate categories with content
+
+CREATE TABLE
+    content_category_mapping (
+        content_id INT NOT NULL,
+        -- ID of the content item
+        category_id INT NOT NULL,
+        -- ID of the category
+        PRIMARY KEY (content_id, category_id),
+        FOREIGN KEY (content_id) REFERENCES content(content_id),
+        -- Assuming 'content' table
+        FOREIGN KEY (category_id) REFERENCES content_categories(category_id)
+    );
+
+show tables;
+
+-- Insert sample content categories created by Admin User
+
+INSERT INTO
+    content_categories (
+        name,
+        description,
+        image_url,
+        created_by
+    )
+VALUES (
+        'Technology',
+        'All things related to technology',
+        'tech.jpg',
+        1
+    ), (
+        'Fashion',
+        'Fashion trends and styling',
+        'fashion.jpg',
+        1
+    ), (
+        'Health',
+        'Health and wellness topics',
+        'health.jpg',
+        2
+    );
+
+-- Insert sample content categories created by Publishers
+
+INSERT INTO
+    content_categories (
+        name,
+        description,
+        image_url,
+        created_by
+    )
+VALUES (
+        'Travel',
+        'Travel destinations and experiences',
+        'travel.jpg',
+        2
+    ), (
+        'Food',
+        'Culinary delights and recipes',
+        'food.jpg',
+        3
+    );
+
+-- Insert content-category associations for content items
+
+-- Insert sample content items into the 'content' table
+
+INSERT INTO
+    content (
+        title,
+        content_text,
+        created_by
+    )
+VALUES (
+        'Tech Article 1',
+        'Content text for tech article 1',
+        1
+    ), (
+        'Fashion Blog',
+        'Content text for fashion blog',
+        2
+    ), (
+        'Travel Diary',
+        'Content text for travel diary',
+        3
+    ), (
+        'Food Recipe',
+        'Content text for food recipe',
+        4
+    );
+
+-- Now, insert content-category associations for content items
+
+INSERT INTO
+    content_category_mapping (content_id, category_id)
+VALUES (1, 1), (2, 2), (3, 3), (4, 5);
+
+select * from content;
+
+SELECT * from content_categories;
+
+SELECT * from content_category_mapping ;
+
+SELECT * from user_profiles ;
+
+SELECT * from user_roles ;
+
+SELECT * from users ;
+
+COMMIT;

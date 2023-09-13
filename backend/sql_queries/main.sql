@@ -821,3 +821,228 @@ CREATE TABLE
         FOREIGN KEY (user_id) REFERENCES users(user_id),
         FOREIGN KEY (content_id) REFERENCES content(content_id)
     );
+
+CREATE TABLE
+    consultation_bookings (
+        booking_id INT AUTO_INCREMENT PRIMARY KEY,
+        request_id INT NOT NULL,
+        advisor_id INT NOT NULL,
+        booked_date DATE NOT NULL,
+        booked_time TIME NOT NULL,
+        status ENUM(
+            'confirmed',
+            'pending',
+            'cancelled'
+        ) DEFAULT 'pending',
+        FOREIGN KEY (request_id) REFERENCES consultation_requests(request_id),
+        FOREIGN KEY (advisor_id) REFERENCES users(user_id)
+    );
+
+INSERT INTO
+    consultation_bookings (
+        request_id,
+        advisor_id,
+        booked_date,
+        booked_time,
+        status
+    )
+VALUES (
+        31,
+        3,
+        '2023-09-20',
+        '10:00:00',
+        'confirmed'
+    ), (
+        32,
+        2,
+        '2023-09-15',
+        '14:30:00',
+        'confirmed'
+    ), (
+        41,
+        6,
+        '2023-09-18',
+        '16:00:00',
+        'pending'
+    ), (
+        42,
+        7,
+        '2023-09-17',
+        '11:30:00',
+        'pending'
+    ), (
+        51,
+        5,
+        '2023-09-19',
+        '13:45:00',
+        'confirmed'
+    );
+
+-- Create a table for user ratings
+
+CREATE TABLE
+    user_ratings (
+        rating_id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT NOT NULL,
+        rated_user_id INT NOT NULL,
+        rating DECIMAL(3, 2) NOT NULL,
+        review TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(user_id),
+        FOREIGN KEY (rated_user_id) REFERENCES users(user_id)
+    );
+
+-- Create a table for content ratings and reviews
+
+CREATE TABLE
+    content_ratings (
+        content_rating_id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT NOT NULL,
+        content_id INT NOT NULL,
+        rating DECIMAL(3, 2) NOT NULL,
+        review TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(user_id),
+        FOREIGN KEY (content_id) REFERENCES content(content_id)
+    );
+
+-- User Ratings and Reviews
+
+INSERT INTO
+    user_ratings (
+        user_id,
+        rated_user_id,
+        rating,
+        review
+    )
+VALUES (
+        1,
+        3,
+        4.5,
+        'Excellent financial advice! Amit really knows his stuff.'
+    ), (
+        2,
+        6,
+        4.0,
+        'Priya helped me improve my health significantly with her guidance.'
+    ), (
+        3,
+        1,
+        3.8,
+        'Rajesh is a knowledgeable software developer, but communication could be better.'
+    ), (
+        4,
+        7,
+        4.2,
+        'Anjali is a fantastic teacher; her teaching methods are effective.'
+    ), (
+        5,
+        10,
+        4.5,
+        'Sanjay gave me great insights into real estate investment.'
+    ), (
+        6,
+        2,
+        3.5,
+        'Sarika provides creative writing tips with a unique perspective.'
+    ), (
+        7,
+        3,
+        4.0,
+        'Naveen has been a valuable asset for our IT infrastructure upgrade.'
+    ), (
+        8,
+        8,
+        4.2,
+        'Preeti helped me achieve my fitness goals with her training plan.'
+    ), (
+        9,
+        9,
+        3.9,
+        'Arjun provided some useful insights into digital marketing.'
+    ), (
+        10,
+        5,
+        4.5,
+        'Meera offers excellent psychological counseling services.'
+    );
+
+-- Content Ratings and Reviews
+
+INSERT INTO
+    content_ratings (
+        user_id,
+        content_id,
+        rating,
+        review
+    )
+VALUES (
+        1,
+        1,
+        4.0,
+        'Informative tech article with up-to-date information.'
+    ), (
+        2,
+        2,
+        4.2,
+        'Priya\'s fashion blog is trendy and well-written.'
+    ), (
+        3,
+        3,
+        3.9,
+        'Rajesh\'s travel diary captures amazing experiences.'
+    ), (
+        4,
+        4,
+        4.5,
+        'Anjali\'s food recipe is delicious; I tried it at home.'
+    ), (
+        5,
+        1,
+        4.2,
+        'Another great tech article by Sanjay.'
+    ), (
+        6,
+        2,
+        3.8,
+        'Sarika\'s fashion tips were helpful for my wardrobe makeover.'
+    ), (
+        7,
+        3,
+        4.0,
+        'The travel diary by Naveen was a pleasant read.'
+    ), (
+        8,
+        4,
+        4.2,
+        'Preeti\'s food recipe is now a family favorite.'
+    ), (
+        9,
+        1,
+        3.9,
+        'Arjun\'s tech article is insightful and practical.'
+    ), (
+        10,
+        5,
+        4.5,
+        'Meera\'s psychological counseling content is enlightening.'
+    );
+
+-- Create a table for the Notification System
+
+CREATE TABLE
+    notifications (
+        notification_id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT NOT NULL,
+        content TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        is_read BOOLEAN DEFAULT FALSE,
+        notification_type ENUM(
+            'consultation_request',
+            'consultation_booking_accepted',
+            'new_message',
+            'content_update'
+        ) NOT NULL,
+        related_id INT,
+        FOREIGN KEY (user_id) REFERENCES users(user_id)
+    );

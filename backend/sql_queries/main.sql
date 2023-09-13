@@ -480,3 +480,344 @@ SELECT * from user_roles ;
 SELECT * from users ;
 
 COMMIT;
+
+-- Create a table to store consultation requests
+
+CREATE TABLE
+    consultation_requests (
+        request_id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT NOT NULL,
+        category_id INT NOT NULL,
+        query TEXT NOT NULL,
+        preferred_advisor INT,
+        status ENUM('open', 'closed') DEFAULT 'open',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(user_id),
+        FOREIGN KEY (category_id) REFERENCES content_categories(category_id),
+        FOREIGN KEY (preferred_advisor) REFERENCES users(user_id)
+    );
+
+-- Create a table to store consultation responses
+
+CREATE TABLE
+    consultation_responses (
+        response_id INT AUTO_INCREMENT PRIMARY KEY,
+        request_id INT NOT NULL,
+        advisor_id INT NOT NULL,
+        message TEXT NOT NULL,
+        sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (request_id) REFERENCES consultation_requests(request_id),
+        FOREIGN KEY (advisor_id) REFERENCES users(user_id)
+    );
+
+-- Create a table to manage messages in the messaging system
+
+CREATE TABLE
+    messages (
+        message_id INT AUTO_INCREMENT PRIMARY KEY,
+        sender_id INT NOT NULL,
+        receiver_id INT NOT NULL,
+        content TEXT NOT NULL,
+        sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (sender_id) REFERENCES users(user_id),
+        FOREIGN KEY (receiver_id) REFERENCES users(user_id)
+    );
+
+show tables;
+
+-- Insert new content categories
+
+INSERT INTO
+    content_categories (
+        name,
+        description,
+        image_url,
+        created_by
+    )
+VALUES (
+        'Category 1',
+        'Description of Category 1',
+        'category1.jpg',
+        1
+    ), (
+        'Category 2',
+        'Description of Category 2',
+        'category2.jpg',
+        1
+    );
+
+-- Insert sample consultation requests with valid category_id values
+
+INSERT INTO
+    consultation_requests (
+        user_id,
+        category_id,
+        query,
+        preferred_advisor,
+        status
+    )
+VALUES (
+        1,
+        1,
+        'Need financial advice for investment',
+        3,
+        'open'
+    ), (
+        2,
+        2,
+        'Healthcare query related to nutrition',
+        2,
+        'open'
+    ), (
+        3,
+        3,
+        'Software development project assistance',
+        6,
+        'open'
+    ), (
+        4,
+        4,
+        'Teaching methods for mathematics',
+        7,
+        'open'
+    ), (
+        5,
+        1,
+        'Real estate investment guidance',
+        5,
+        'open'
+    ), (
+        6,
+        2,
+        'Artistic writing tips',
+        10,
+        'open'
+    ), (
+        7,
+        3,
+        'IT infrastructure upgrade consultation',
+        9,
+        'open'
+    ), (
+        8,
+        4,
+        'Fitness training plan',
+        8,
+        'open'
+    ), (
+        9,
+        5,
+        'Digital marketing strategy',
+        11,
+        'open'
+    ), (
+        10,
+        6,
+        'Psychological counseling session',
+        12,
+        'open'
+    );
+
+-- Insert sample consultation responses with valid request_id values
+
+INSERT INTO
+    consultation_responses (
+        request_id,
+        advisor_id,
+        message
+    )
+VALUES (
+        31,
+        3,
+        'Sure, I can help you with your investment. Let\'s discuss your goals.'
+    ), (
+        32,
+        2,
+        'I can provide you with nutrition advice. Please share more details.'
+    ), (
+        33,
+        6,
+        'I have experience in software development. Let\'s talk about your project.'
+    ), (
+        34,
+        7,
+        'I can assist with teaching methods. Tell me more about your needs.'
+    ), (
+        35,
+        5,
+        'I specialize in real estate. Let\'s discuss your investment plans.'
+    ), (
+        36,
+        10,
+        'I can provide tips for artistic writing. What do you need help with?'
+    ), (
+        37,
+        9,
+        'I offer IT consulting services. Let\'s plan the upgrade.'
+    ), (
+        38,
+        8,
+        'I can create a fitness training plan for you. What are your goals?'
+    ), (
+        39,
+        11,
+        'I specialize in digital marketing. Let\'s discuss your strategy.'
+    ), (
+        40,
+        12,
+        'I offer psychological counseling. We can talk about your concerns.'
+    );
+
+-- Insert sample messages with sender and receiver IDs
+
+INSERT INTO
+    messages (
+        sender_id,
+        receiver_id,
+        content
+    )
+VALUES (
+        1,
+        3,
+        'Hi, I\'m interested in your advice for investment.'
+    ), (
+        3,
+        1,
+        'Sure, I can help you with that. Let\'s chat.'
+    ), (
+        2,
+        6,
+        'Can you provide nutritional guidance?'
+    ), (
+        6,
+        2,
+        'Of course, I have expertise in nutrition. What do you need?'
+    ), (
+        4,
+        7,
+        'I need teaching methods advice.'
+    ), (
+        7,
+        4,
+        'I can assist with that. Let\'s discuss.'
+    ), (
+        5,
+        10,
+        'Tell me more about real estate investment.'
+    ), (
+        10,
+        5,
+        'I can help you make informed decisions. Let\'s chat.'
+    ), (
+        9,
+        11,
+        'I need help with digital marketing.'
+    ), (
+        11,
+        9,
+        'I can provide guidance. What\'s your business?'
+    );
+
+show tables;
+
+show create table content;
+
+-- Insert content data to match user reviews
+
+INSERT INTO
+    content (
+        title,
+        content_text,
+        created_by,
+        created_at
+    )
+VALUES (
+        'Technology Article',
+        'This is a technology article that covers various tech topics.',
+        1,
+        NOW()
+    ), (
+        'Healthcare Content',
+        'This content provides insights into healthcare and nutrition.',
+        2,
+        NOW()
+    ), (
+        'Finance Article',
+        'Learn about finance and investment in this informative article.',
+        3,
+        NOW()
+    ), (
+        'Education Resource',
+        'This resource contains educational content on various subjects.',
+        4,
+        NOW()
+    ), (
+        'Travel Guide',
+        'Explore exciting travel destinations with this travel guide.',
+        5,
+        NOW()
+    );
+
+-- Insert additional content data
+
+INSERT INTO
+    content (
+        title,
+        content_text,
+        created_by,
+        created_at
+    )
+VALUES (
+        'Artistic Creations',
+        'Discover the world of art with these amazing creations.',
+        6,
+        NOW()
+    ), (
+        'IT Trends',
+        'Stay updated with the latest trends in the IT industry.',
+        7,
+        NOW()
+    ), (
+        'Fitness Tips',
+        'Achieve your fitness goals with these useful tips.',
+        8,
+        NOW()
+    ), (
+        'Marketing Strategies',
+        'Learn effective marketing strategies for your business.',
+        9,
+        NOW()
+    ), (
+        'Mindfulness Meditation',
+        'Practice mindfulness with guided meditation sessions.',
+        10,
+        NOW()
+    );
+
+CREATE TABLE
+    content_tags (
+        tag_id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+
+CREATE TABLE
+    content_tag_mapping (
+        content_id INT NOT NULL,
+        tag_id INT NOT NULL,
+        PRIMARY KEY (content_id, tag_id),
+        FOREIGN KEY (content_id) REFERENCES content(content_id),
+        FOREIGN KEY (tag_id) REFERENCES content_tags(tag_id)
+    );
+
+CREATE TABLE
+    user_reviews (
+        review_id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT NOT NULL,
+        content_id INT NOT NULL,
+        rating INT,
+        review_text TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(user_id),
+        FOREIGN KEY (content_id) REFERENCES content(content_id)
+    );

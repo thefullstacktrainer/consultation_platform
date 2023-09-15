@@ -1,0 +1,21 @@
+# Ignore Node.js modules installed via npm or yarn
+node_modules
+
+# Ignore npm's cache folder
+.npm
+
+# Ignore log files
+*.log
+
+# Ignore user-specific files
+.DS_Store
+.vscode/
+.idea/
+
+# Ignore files related to version control systems
+.git
+.gitignore
+.svn
+
+# Ignore any local development files or configuration specific to your machine
+.env

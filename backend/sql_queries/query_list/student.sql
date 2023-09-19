@@ -1,4 +1,4 @@
--- drop database student;
+drop database student;
 create database student;
 show DATABASES;
 use student;
